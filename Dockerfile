@@ -59,6 +59,14 @@ RUN git clone https://github.com/lmb-freiburg/flownet2                      && \
     cd ..                                                                   && \
     make -j`nproc`                                                          && \
     make -j`nproc` pycaffe
+    
+RUN git clone https://github.com/NVlabs/PWC-Net                           && \
+    cd flownet2                                                           && \
+    cp ../PWC-Net/Caffe/warping_code/warp_layer.cu src/caffe/layers/      && \
+    cp ../PWC-Net/Caffe/warping_code/warp_layer.cpp src/caffe/layers/     && \
+    cp ../PWC-Net/Caffe/warping_code/warp_layer.hpp include/caffe/layers/ && \
+    make -j`nproc`                                                        && \
+    make -j`nproc` pycaffe
 
 USER root
 RUN apt-get remove -y                               \
